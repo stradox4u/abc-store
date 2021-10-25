@@ -43,5 +43,10 @@ class User
   {
     return $this->cart;
   }
+
+  public function getUserRatings()
+  {
+    return $this->ratings;
+  }
 }
 

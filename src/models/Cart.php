@@ -26,21 +26,18 @@ class Cart
 
   /**
    * @var Collection
-   * @ManyToMany(targetEntity="Product")
-   * @JoinTable(name="carts_products",
-   *  joinColumns={@JoinColumn(name="cart_id", referencedColumnName="id")},
-   *  inverseJoinColumns={@JoinColumn(name="product_id", referencedColumnName="id")}
-   * )
+   * @OneToMany(targetEntity="CartItem", mappedBy="cart")
+   * 
   */
-  private $products;
+  private $cartItems;
 
   public function __construct()
   {
-    $this->products = new ArrayCollection();
+    $this->cartItems = new ArrayCollection();
   }
 
-  public function getProducts()
+  public function getCartItems()
   {
-    return $this->products;
+    return $this->cartItems;
   }
 }

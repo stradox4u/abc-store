@@ -1,26 +1,32 @@
 {
-    "name": "stradox/abc-store",
-    "description": "Coding Assignment from abc.pl",
-    "type": "project",
-    "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "Stradox\\AbcStore\\": "src/"
-        },
-        "classmap": [
-            "config", "src/models"
-        ]
+  "name": "stradox/abc-store",
+  "description": "Coding Assignment from abc.pl",
+  "type": "project",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Stradox\\AbcStore\\": "src/"
     },
-    "authors": [
-        {
-            "name": "Umar Adejoh",
-            "email": "umar@arcodeh.pro"
-        }
-    ],
-    "require": {
-        "doctrine/orm": "^2.10",
-        "doctrine/cache": "^2.1",
-        "symfony/cache": "^5.3",
-        "vlucas/phpdotenv": "^5.3"
+    "classmap": [
+      "config",
+      "src/models"
+    ]
+  },
+  "authors": [
+    {
+      "name": "Umar Adejoh",
+      "email": "umar@arcodeh.pro"
     }
+  ],
+  "scripts": {
+    "database:drop": "vendor/bin/doctrine orm:schema-tool:drop --force",
+    "database:create": "vendor/bin/doctrine orm:schema-tool:create",
+    "database:update": "vendor/bin/doctrine orm:schema-tool:update --force"
+  },
+  "require": {
+    "doctrine/orm": "^2.10",
+    "doctrine/cache": "^2.1",
+    "symfony/cache": "^5.3",
+    "vlucas/phpdotenv": "^5.3"
+  }
 }

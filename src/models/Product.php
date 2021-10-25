@@ -32,8 +32,24 @@ class Product
   */
   private $ratings;
 
+  /**
+   * @OneToMany(targetEntity="CartItem", mappedBy="product")
+  */
+  private $cartItems;
+
   public function __construct()
   {
     $this->ratings = new ArrayCollection();
+    $this->cartItems = new ArrayCollection();
+  }
+
+  public function getProductRatings()
+  {
+    return $this->ratings;
+  }
+
+  public function getProductCartItems()
+  {
+    return $this->cartItems;
   }
 }
