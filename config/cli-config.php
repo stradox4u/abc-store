@@ -5,17 +5,7 @@ use Config\GetEntityManager;
 
 require_once "./bootstrap.php";
 
-$paths = array("src/models");
-$isDevMode = false;
-
-$dbParams = array(
-  'driver' => 'pdo_mysql',
-  'user' => 'root',
-  'password' => $_ENV['DB_PASSWORD'],
-  'dbname' => $_ENV['DB_NAME'],
-);
-
-$entityManagerSetup = new GetEntityManager($paths, $isDevMode, $dbParams);
-$entityManager = $entityManagerSetup->getEntityManager();
+$getEm = new GetEntityManager();
+$entityManager = $getEm->getEntityManager();
 
 return ConsoleRunner::createHelperSet($entityManager);

@@ -9,7 +9,8 @@
     },
     "classmap": [
       "config",
-      "src/models"
+      "src/models",
+      "src/traits"
     ]
   },
   "authors": [
