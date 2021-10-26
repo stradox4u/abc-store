@@ -60,5 +60,10 @@ class User
   {
     return $this->balance;
   }
+
+  public function getId()
+  {
+    return $this->id;
+  }
 }
 

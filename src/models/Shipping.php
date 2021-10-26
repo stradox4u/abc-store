@@ -31,4 +31,14 @@ class Shipping
     $this->type = $type;
     $this->cost = $cost;
   }
+
+  public function getType()
+  {
+    return $this->type;
+  }
+
+  public function getCost()
+  {
+    return $this->cost;
+  }
 }

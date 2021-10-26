@@ -41,5 +41,11 @@ $shippingMethods = [
   ['type' => 'UPS', 'cost' => 500]
 ];
 
+/**
+ * In order to seed the database from the command line using
+ * composer database:seed, this script file is required to tie
+ * together all the class based operations
+*/
+
 $seeder = new DatabaseSeeder($products, $users, $shippingMethods);
 $seeder->seedDatabase();

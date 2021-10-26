@@ -10,11 +10,11 @@
 <body>
   <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container mx-auto d-flex justify-content-between align-items-baseline">
-      <a class="navbar-brand block" href="/"><h1 class="h2">ABC Coding Test</h1></a>
+      <a class="navbar-brand block" href="/"><h1 class="h2">ABC Shop</h1></a>
 
       <div class="container"></div>
       <div class="container">
-        <ul class="navbar nav-pills">
+        <ul class="nav justify-content-end">
           <?php if(!isset($_SESSION['username']))
           { ?>
             <li class="nav-item">

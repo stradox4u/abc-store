@@ -15,7 +15,7 @@
             <h5 class="card-title text-capitalize"><?php echo $product['name'] ?><h5>
           </div>
           <div class="card-text p-3">
-            <h6>Price: &#36; <?php echo ($product['price'] / 100) ?></h6>
+            <h6 class="text-secondary">Price: &#36; <?php echo ($product['price'] / 100) ?></h6>
             <form action="/cart" method="POST">
               <input type="hidden" name="prodId" value="<?= $product['id'] ?>">
               <div class="d-grid gap-2">
