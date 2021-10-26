@@ -19,7 +19,7 @@ class DatabaseSeeder
   {
     foreach($this->products as $product)
     {
-      $prodModel = new ProductSeeder($product['name'], $product['price'], $product['unit']);
+      $prodModel = new ProductSeeder($product['name'], $product['price'], $product['unit'], $product['image']);
       $prodModel->storeProduct();
     }
   }

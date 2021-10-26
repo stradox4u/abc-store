@@ -16,11 +16,15 @@
       <div class="container">
         <ul class="navbar nav-pills">
           <?php if(!isset($_SESSION['username']))
-          {
-            return `<li class="nav-item">
-            <a class="nav-link" href="/login"><h5>Login</h5></a>
-          </li>`;
-          } ?>
+          { ?>
+            <li class="nav-item">
+              <a class="nav-link" href="/login"><h5>Login</h5></a>
+            </li>
+          <?php } else { ?>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout"><h5>Logout</h5></a>
+            </li>
+          <?php } ?>
           <li class="nav-item">
             <a class="nav-link" href="/cart"><h5>Cart</h5></a>
           </li>

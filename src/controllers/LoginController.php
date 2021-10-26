@@ -33,7 +33,7 @@ class LoginController extends Controller
         return '';
       }
     }
-
+var_dump($formError['username']);
     return (new Template('loginForm'))->render([
       'formError' => $formError,
       'formUsername' => $formUsername ?? ''
@@ -45,7 +45,12 @@ class LoginController extends Controller
     $em = $this->getEntityManager();
     $user = $em->getRepository('App\Models\User')
       ->findOneBy(array('name' => $username));
-    var_dump($user->getName());
-    return ['name' => $user->getName(), 'balance' => $user->getBalance()] ?? null;
+    if($user)
+    {
+      return ['name' => $user->getName(), 'balance' => $user->getBalance()];
+    } else 
+    {
+      return null;
+    }
   }
 }

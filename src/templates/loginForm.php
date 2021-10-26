@@ -15,7 +15,7 @@
         value="<?= htmlentities($formUsername ?? '') ?>" class="form-control">
       <?php if(isset($formError['username']))
       {
-        echo sprintf('<div class="invalid-feedback">%s</div>', htmlentities($formError['username']));
+        echo sprintf('<div class="text-danger">%s</div>', htmlentities($formError['username']));
       } ?>
     </div>
     <div class="d-grid gap-2">

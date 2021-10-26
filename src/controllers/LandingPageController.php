@@ -35,6 +35,7 @@ class LandingPageController extends Controller
         'name' => $product->getName(),
         'price' => $product->getPrice(),
         'unit' => $product->getUnit(),
+        'image' => $product->getImage()
       );
     }, $products);
     return $allProducts;

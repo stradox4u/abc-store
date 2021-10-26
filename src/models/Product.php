@@ -27,6 +27,9 @@ class Product
   /** @Column(type="string") */
   private $unit;
 
+  /** @Column(type="string") */
+  private $image;
+
   /**
    * @OneToMany(targetEntity="Rating", mappedBy="product")
   */
@@ -37,11 +40,12 @@ class Product
   */
   private $cartItems;
 
-  public function __construct(string $name, int $price, string $unit)
+  public function __construct(string $name, int $price, string $unit, string $image)
   {
     $this->name = $name;
     $this->price = $price;
     $this->unit = $unit;
+    $this->image = $image;
     $this->ratings = new ArrayCollection();
     $this->cartItems = new ArrayCollection();
   }
@@ -69,6 +73,11 @@ class Product
   public function getUnit()
   {
     return $this->unit;
+  }
+
+  public function getImage()
+  {
+    return $this->image;
   }
 
   public function getId()
