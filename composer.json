@@ -11,7 +11,10 @@
       "config",
       "src/models",
       "src/traits",
-      "src/database"
+      "src/database",
+      "src/routing",
+      "src/templates",
+      "src/controllers"
     ]
   },
   "authors": [

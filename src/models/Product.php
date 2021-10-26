@@ -55,4 +55,24 @@ class Product
   {
     return $this->cartItems;
   }
+
+  public function getName()
+  {
+    return $this->name;
+  }
+
+  public function getPrice()
+  {
+    return $this->price;
+  }
+
+  public function getUnit()
+  {
+    return $this->unit;
+  }
+
+  public function getId()
+  {
+    return $this->id;
+  }
 }

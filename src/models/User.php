@@ -50,5 +50,15 @@ class User
   {
     return $this->ratings;
   }
+
+  public function getName()
+  {
+    return $this->name;
+  }
+
+  public function getBalance()
+  {
+    return $this->balance;
+  }
 }
 
