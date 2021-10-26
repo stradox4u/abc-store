@@ -10,7 +10,8 @@
     "classmap": [
       "config",
       "src/models",
-      "src/traits"
+      "src/traits",
+      "src/database"
     ]
   },
   "authors": [
@@ -22,7 +23,8 @@
   "scripts": {
     "database:drop": "vendor/bin/doctrine orm:schema-tool:drop --force",
     "database:create": "vendor/bin/doctrine orm:schema-tool:create",
-    "database:update": "vendor/bin/doctrine orm:schema-tool:update --force"
+    "database:update": "vendor/bin/doctrine orm:schema-tool:update --force",
+    "database:seed": "@php seedDatabase.php"
   },
   "require": {
     "doctrine/orm": "^2.10",

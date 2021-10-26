@@ -25,4 +25,10 @@ class Shipping
    * @Column(type="integer")
   */
   private $cost;
+
+  public function __construct(string $type, int $cost)
+  {
+    $this->type = $type;
+    $this->cost = $cost;
+  }
 }

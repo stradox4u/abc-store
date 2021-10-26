@@ -34,8 +34,10 @@ class User
   */
   private $ratings;
 
-  public function __construct()
+  public function __construct(string $name, int $balance)
   {
+    $this->name = $name;
+    $this->balance = $balance;
     $this->ratings = new ArrayCollection();
   }
 

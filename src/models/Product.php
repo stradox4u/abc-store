@@ -37,8 +37,11 @@ class Product
   */
   private $cartItems;
 
-  public function __construct()
+  public function __construct(string $name, int $price, string $unit)
   {
+    $this->name = $name;
+    $this->price = $price;
+    $this->unit = $unit;
     $this->ratings = new ArrayCollection();
     $this->cartItems = new ArrayCollection();
   }
