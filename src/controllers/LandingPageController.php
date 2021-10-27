@@ -47,7 +47,13 @@ class LandingPageController extends Controller
   {
     $em = $this->getEntityManager();
     $user = $em->getRepository('App\Models\User')->find($_SESSION['userdata']['id']);
-    $cartItems = $user->getCart()->getCartItems()->toArray();
-    return count($cartItems);
+    if($user->getCart())
+    {
+      $cartItems = $user->getCart()->getCartItems()->toArray();
+      return count($cartItems);
+    } else
+    {
+      return 0;
+    }
   }
 }

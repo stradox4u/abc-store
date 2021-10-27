@@ -29,12 +29,9 @@
           <?php } ?>
           <li class="nav-item">
             <a class="nav-link d-flex inline-flex" href="/cart"><h5>Cart</h5>
-              <?php if($_SESSION['cartCount'] > 0)
-              { ?>
-                <span class="badge bg-danger align-self-start mx-2" id="cart_badge">
-                  <?php echo $_SESSION['cartCount']; ?>
-                </span>
-              <?php } ?>
+              <span class="badge bg-danger align-self-start mx-2" id="cart_badge">
+                <?php echo $_SESSION['cartCount']; ?>
+              </span>
             </a>
           </li>
         </ul>

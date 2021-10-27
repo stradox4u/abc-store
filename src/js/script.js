@@ -1,10 +1,11 @@
 window.onload = function () {
   addToCartFormListener();
+  showCartPill();
 }
 
+const cartBadge = document.getElementById('cart_badge');
 function addToCartFormListener() {
   const forms = document.getElementsByClassName('product-form');
-  const cartBadge = document.getElementById('cart_badge');
   const formsArray = Array.from(forms);
   formsArray.forEach(function (form) {
     form.addEventListener('submit', async function (event) {
@@ -14,6 +15,7 @@ function addToCartFormListener() {
       const cartCount = response.length;
 
       cartBadge.innerText = cartCount;
+      showCartPill();
     });
   });
 }
@@ -35,4 +37,12 @@ async function addProductToCart(id, qty, userId) {
       body: JSON.stringify(data)
     });
   return response.json();
+}
+
+function showCartPill() {
+  if (cartBadge.innerText === '0') {
+    cartBadge.classList.add('invisible');
+  } else {
+    cartBadge.classList.remove('invisible');
+  }
 }
