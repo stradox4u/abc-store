@@ -29,7 +29,8 @@
           <?php } ?>
           <li class="nav-item">
             <a class="nav-link d-flex inline-flex" href="/cart"><h5>Cart</h5>
-              <span class="badge bg-danger align-self-start mx-2" id="cart_badge">
+              <span class="badge bg-danger align-self-start mx-2
+                <?= $_SESSION['cartCount'] === 0 ? 'invisible' : '' ?>" id="cart_badge">
                 <?php echo $_SESSION['cartCount']; ?>
               </span>
             </a>

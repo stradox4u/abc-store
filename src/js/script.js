@@ -1,6 +1,5 @@
 window.onload = function () {
   addToCartFormListener();
-  showCartPill();
 }
 
 const cartBadge = document.getElementById('cart_badge');
@@ -40,9 +39,7 @@ async function addProductToCart(id, qty, userId) {
 }
 
 function showCartPill() {
-  if (cartBadge.innerText === '0') {
-    cartBadge.classList.add('invisible');
-  } else {
+  if (cartBadge.innerText !== '0') {
     cartBadge.classList.remove('invisible');
   }
 }
