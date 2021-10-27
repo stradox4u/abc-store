@@ -16,7 +16,15 @@
           </div>
           <div class="card-text p-3">
             <h6 class="text-secondary">Price: &#36; <?php echo ($product['price'] / 100) ?></h6>
+            <div class="d-flex flex-row justify-content-between">
+              <h6 class="text-secondary text-capitalize">Unit: <?php echo ($product['unit']) ?></h6>
+            </div>
             <form action="/cart" method="POST">
+              <div class="input-group my-3">
+                <span class="input-group-text">Quantity:</span>
+                <input type="number" name="quantity" id="<?= $product['id'] ?>_qty"
+                class="form-control form-control-sm">
+              </div>
               <input type="hidden" name="prodId" value="<?= $product['id'] ?>">
               <div class="d-grid gap-2">
                 <button class="btn btn-primary btn-sm mt-3">Add To Cart</button>
