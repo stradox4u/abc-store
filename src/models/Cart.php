@@ -45,4 +45,9 @@ class Cart
   {
     $this->user = $user;
   }
+
+  public function getId()
+  {
+    return $this->id;
+  }
 }

@@ -20,7 +20,7 @@ class LandingPageController extends Controller
     $allProducts = $this->getProducts();
     return (new Template('landingPage'))->render([
       'products' => $allProducts,
-      'user' => $_SESSION['username']
+      'user' => $_SESSION['userdata']
     ]);
   }
 

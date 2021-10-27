@@ -5,7 +5,6 @@ namespace App\Controllers;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Routing\Template;
-use App\Routing\ApiTemplate;
 use App\Traits\UseEntityManager;
 
 class ShoppingCartController extends Controller
@@ -21,8 +20,9 @@ class ShoppingCartController extends Controller
 
       $prodId = $params->prodId;
       $prodQty = $params->prodQty;
+      $userId = $params->userId;
 
-      $user = $em->getRepository('App\Models\User')->find($_SESSION['userdata']['id']);
+      $user = $em->getRepository('App\Models\User')->find($userId);
       $userCart = $user->getCart();
       if(!$userCart)
       {
@@ -34,27 +34,25 @@ class ShoppingCartController extends Controller
 
       $product = $em->getRepository('App\Models\Product')->find($prodId);
       $cartItem = new CartItem();
+      $user->getCart()->getCartItems()->add($cartItem);
       $cartItem->setQuantity($prodQty);
-
-      $cartItem->setCart($userCart);
       $cartItem->setProduct($product);
-      $userCart->getCartItems()->add($cartItem);
+      $cartItem->setCart($userCart);
+
 
       $em->persist($cartItem);
+      $em->persist($userCart);
       $em->flush();
-
-      $cartItems = $user->getCart()->getCartItems();
-      $cartItems->map(function($item)
-      {
-        return [
-          'productName' => $item->getProduct()->getName(),
+      
+      $cartItems = $userCart->getCartItems();
+      $cartArray = [];
+      foreach ($cartItems as $item) {
+        array_push($cartArray, [
+          'name' => $item->getProduct()->getName(),
           'quantity' => $item->getQuantity()
-        ];
-      });
-
-      $cartItems->toArray();
-
-      return '';
+        ]);
+      }
+      return json_encode($cartArray);
     }
   }
 }

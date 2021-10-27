@@ -26,6 +26,7 @@
                 class="form-control form-control-sm">
               </div>
               <input type="hidden" name="prodId" value="<?= $product['id'] ?>">
+              <input type="hidden" name="userId" value="<?= $_SESSION['userdata']['id'] ?>">
               <div class="d-grid gap-2">
                 <button class="btn btn-primary btn-sm mt-3">Add To Cart</button>
               </div>

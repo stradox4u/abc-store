@@ -9,19 +9,17 @@ function addToCartFormListener() {
   formsArray.forEach(function (form) {
     form.addEventListener('submit', function (event) {
       event.preventDefault()
-      const response = addProductToCart(form.prodId.value, form.quantity.value);
+      const response = addProductToCart(form.prodId.value, form.quantity.value, form.userId.value);
     });
   });
-  // console.log(form.quantity.value)
-  // console.log(form.prodId.value)
-
 }
 
-async function addProductToCart(id, qty) {
+async function addProductToCart(id, qty, userId) {
   const data =
   {
     prodId: id,
-    prodQty: qty
+    prodQty: qty,
+    userId: userId
   };
   const response = await fetch('http://localhost:8000/api/cart',
     {
@@ -32,5 +30,5 @@ async function addProductToCart(id, qty) {
       },
       body: JSON.stringify(data)
     });
-  console.log(response.text());
+  console.log(response.json());
 }
