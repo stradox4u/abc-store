@@ -13,9 +13,9 @@ class ShoppingCartController extends Controller
 
   public function handle(): string
   {
+    $em = $this->getEntityManager();
     if($_SERVER['REQUEST_METHOD'] === 'POST')
     {
-      $em = $this->getEntityManager();
       $params = json_decode(file_get_contents('php://input'));
 
       $prodId = $params->prodId;
@@ -31,18 +31,31 @@ class ShoppingCartController extends Controller
         $em->persist($cart);
         $userCart = $user->getCart();
       }
-
+      
       $product = $em->getRepository('App\Models\Product')->find($prodId);
+      $oldCartItems = $userCart->getCartItems();
       $cartItem = new CartItem();
-      $user->getCart()->getCartItems()->add($cartItem);
-      $cartItem->setQuantity($prodQty);
-      $cartItem->setProduct($product);
-      $cartItem->setCart($userCart);
+      $filtered = $oldCartItems->filter(function($element) use($product)
+      {
+        return $element->getProduct()->getName() == $product->getName();
+      });
+      if(!$filtered->isEmpty())
+      {
+        $oldQty = $filtered->first()->getQuantity();
+        $filtered->first()->setQuantity($oldQty + $prodQty);
+        $em->persist($userCart);
+        $em->flush();
+      } else 
+      {
+        $userCart->getCartItems()->add($cartItem);
+        $cartItem->setQuantity($prodQty);
+        $cartItem->setProduct($product);
+        $cartItem->setCart($userCart);
+        $em->persist($cartItem);
+        $em->persist($userCart);
+        $em->flush();
+      }
 
-
-      $em->persist($cartItem);
-      $em->persist($userCart);
-      $em->flush();
       
       $cartItems = $userCart->getCartItems();
       $cartArray = [];

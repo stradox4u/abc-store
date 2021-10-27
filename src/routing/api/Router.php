@@ -19,7 +19,7 @@ class Router
         {
           public function handle(): string
           {
-            echo json_encode(['messageZoom' => 'Server error!']);
+            echo json_encode(['message' => 'Server error!']);
             return '';
           }
         };

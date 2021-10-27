@@ -1,15 +1,19 @@
 window.onload = function () {
-  console.log('Hello from Javascript');
   addToCartFormListener();
 }
 
 function addToCartFormListener() {
   const forms = document.getElementsByClassName('product-form');
+  const cartBadge = document.getElementById('cart_badge');
   const formsArray = Array.from(forms);
   formsArray.forEach(function (form) {
-    form.addEventListener('submit', function (event) {
+    form.addEventListener('submit', async function (event) {
       event.preventDefault()
-      const response = addProductToCart(form.prodId.value, form.quantity.value, form.userId.value);
+      const response = await addProductToCart(form.prodId.value, form.quantity.value, form.userId.value);
+
+      const cartCount = response.length;
+
+      cartBadge.innerText = cartCount;
     });
   });
 }
@@ -30,5 +34,5 @@ async function addProductToCart(id, qty, userId) {
       },
       body: JSON.stringify(data)
     });
-  console.log(response.json());
+  return response.json();
 }

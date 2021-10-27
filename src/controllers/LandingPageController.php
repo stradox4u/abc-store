@@ -18,9 +18,11 @@ class LandingPageController extends Controller
     }
 
     $allProducts = $this->getProducts();
+    $cartCount = $this->getUserCart();
+    $_SESSION['cartCount'] = $cartCount;
     return (new Template('landingPage'))->render([
       'products' => $allProducts,
-      'user' => $_SESSION['userdata']
+      'user' => $_SESSION['userdata'],
     ]);
   }
 
@@ -39,5 +41,13 @@ class LandingPageController extends Controller
       );
     }, $products);
     return $allProducts;
+  }
+
+  private function getUserCart(): int
+  {
+    $em = $this->getEntityManager();
+    $user = $em->getRepository('App\Models\User')->find($_SESSION['userdata']['id']);
+    $cartItems = $user->getCart()->getCartItems()->toArray();
+    return count($cartItems);
   }
 }
