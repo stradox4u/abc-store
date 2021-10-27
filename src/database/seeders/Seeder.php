@@ -1,11 +1,10 @@
 <?php
-namespace Config;
+
+namespace App\Database\Seeders;
 
 use App\Traits\UseEntityManager;
 
-class GetEntityManager
+class Seeder
 {
   use UseEntityManager;
 }
-
-?>

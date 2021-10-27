@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use NumberFormatter;
 
 /**
  * @Entity
@@ -27,6 +28,9 @@ class Product
   /** @Column(type="string") */
   private $unit;
 
+  /** @Column(type="string") */
+  private $image;
+
   /**
    * @OneToMany(targetEntity="Rating", mappedBy="product")
   */
@@ -37,8 +41,12 @@ class Product
   */
   private $cartItems;
 
-  public function __construct()
+  public function __construct(string $name, int $price, string $unit, string $image)
   {
+    $this->name = $name;
+    $this->price = $price;
+    $this->unit = $unit;
+    $this->image = $image;
     $this->ratings = new ArrayCollection();
     $this->cartItems = new ArrayCollection();
   }
@@ -51,5 +59,30 @@ class Product
   public function getProductCartItems()
   {
     return $this->cartItems;
+  }
+
+  public function getName()
+  {
+    return $this->name;
+  }
+
+  public function getPrice()
+  {
+    return number_format(($this->price / 100), 2, '.');
+  }
+
+  public function getUnit()
+  {
+    return $this->unit;
+  }
+
+  public function getImage()
+  {
+    return $this->image;
+  }
+
+  public function getId()
+  {
+    return $this->id;
   }
 }

@@ -9,7 +9,12 @@
     },
     "classmap": [
       "config",
-      "src/models"
+      "src/models",
+      "src/traits",
+      "src/database",
+      "src/routing",
+      "src/templates",
+      "src/controllers"
     ]
   },
   "authors": [
@@ -21,7 +26,13 @@
   "scripts": {
     "database:drop": "vendor/bin/doctrine orm:schema-tool:drop --force",
     "database:create": "vendor/bin/doctrine orm:schema-tool:create",
-    "database:update": "vendor/bin/doctrine orm:schema-tool:update --force"
+    "database:update": "vendor/bin/doctrine orm:schema-tool:update --force",
+    "database:seed": "@php seedDatabase.php",
+    "database:refresh": [
+      "vendor/bin/doctrine orm:schema-tool:drop --force",
+      "vendor/bin/doctrine orm:schema-tool:create",
+      "@php seedDatabase.php"
+    ]
   },
   "require": {
     "doctrine/orm": "^2.10",

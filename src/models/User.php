@@ -34,8 +34,10 @@ class User
   */
   private $ratings;
 
-  public function __construct()
+  public function __construct(string $name, int $balance)
   {
+    $this->name = $name;
+    $this->balance = $balance;
     $this->ratings = new ArrayCollection();
   }
 
@@ -44,9 +46,30 @@ class User
     return $this->cart;
   }
 
+  public function setCart(Cart $cart)
+  {
+    $this->cart = $cart;
+    $cart->setUser($this);
+  }
+
   public function getUserRatings()
   {
     return $this->ratings;
+  }
+
+  public function getName()
+  {
+    return $this->name;
+  }
+
+  public function getBalance()
+  {
+    return $this->balance;
+  }
+
+  public function getId()
+  {
+    return $this->id;
   }
 }
 
