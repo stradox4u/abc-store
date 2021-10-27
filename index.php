@@ -23,5 +23,4 @@ if($controller = $router->getController())
   $templateData['content'] = $content;
   $templateData['title'] = $controller->getTitle();
 }
-
 echo $mainTemplate->render($templateData);

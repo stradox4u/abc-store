@@ -15,14 +15,14 @@
             <h5 class="card-title text-capitalize"><?php echo $product['name'] ?><h5>
           </div>
           <div class="card-text p-3">
-            <h6 class="text-secondary">Price: &#36; <?php echo ($product['price'] / 100) ?></h6>
+            <h6 class="text-secondary">Price: &#36; <?php echo ($product['price']) ?></h6>
             <div class="d-flex flex-row justify-content-between">
-              <h6 class="text-secondary text-capitalize">Unit: <?php echo ($product['unit']) ?></h6>
+              <h6 class="text-secondary">Unit: <?php echo ($product['unit']) ?></h6>
             </div>
-            <form action="/cart" method="POST">
+            <form action="/cart" method="POST" class="product-form">
               <div class="input-group my-3">
                 <span class="input-group-text">Quantity:</span>
-                <input type="number" name="quantity" id="<?= $product['id'] ?>_qty"
+                <input type="number" name="quantity" id="<?= $product['id'] ?>_qty" value="1"
                 class="form-control form-control-sm">
               </div>
               <input type="hidden" name="prodId" value="<?= $product['id'] ?>">

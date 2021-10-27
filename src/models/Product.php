@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use NumberFormatter;
 
 /**
  * @Entity
@@ -67,7 +68,7 @@ class Product
 
   public function getPrice()
   {
-    return $this->price;
+    return number_format(($this->price / 100), 2, '.');
   }
 
   public function getUnit()

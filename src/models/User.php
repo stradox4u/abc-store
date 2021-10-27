@@ -46,6 +46,12 @@ class User
     return $this->cart;
   }
 
+  public function setCart(Cart $cart)
+  {
+    $this->cart = $cart;
+    $cart->setUser($this);
+  }
+
   public function getUserRatings()
   {
     return $this->ratings;

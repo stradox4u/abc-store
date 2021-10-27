@@ -32,4 +32,29 @@ class CartItem
    * @JoinColumn(name="cart_id", referencedColumnName="id")
   */
   private $cart;
+
+  public function setCart(Cart $cart)
+  {
+    $this->cart = $cart;
+  }
+
+  public function setProduct(Product $product)
+  {
+    $this->product = $product;
+  }
+
+  public function setQuantity(int $quantity)
+  {
+    $this->quantity = $quantity;
+  }
+
+  public function getProduct()
+  {
+    return $this->product;
+  }
+
+  public function getQuantity()
+  {
+    return $this->quantity;
+  }
 }

@@ -40,4 +40,9 @@ class Cart
   {
     return $this->cartItems;
   }
+
+  public function setUser(User $user)
+  {
+    $this->user = $user;
+  }
 }

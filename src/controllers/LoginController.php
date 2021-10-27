@@ -33,7 +33,6 @@ class LoginController extends Controller
         return '';
       }
     }
-var_dump($formError['username']);
     return (new Template('loginForm'))->render([
       'formError' => $formError,
       'formUsername' => $formUsername ?? ''
@@ -47,7 +46,7 @@ var_dump($formError['username']);
       ->findOneBy(array('name' => $username));
     if($user)
     {
-      return ['name' => $user->getName(), 'balance' => $user->getBalance()];
+      return ['id' => $user->getId(), 'name' => $user->getName(), 'balance' => $user->getBalance()];
     } else 
     {
       return null;
