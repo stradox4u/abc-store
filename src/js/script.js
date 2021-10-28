@@ -1,6 +1,7 @@
 window.onload = function () {
   addToCartFormListener();
   updateCartQuantityListener();
+  shippingMethodListener();
 }
 
 const cartBadge = document.getElementById('cart_badge');
@@ -73,4 +74,30 @@ function updateCartQuantityListener() {
       }
     })
   })
+}
+
+function shippingMethodListener() {
+  const shipping = document.getElementById('shipping-method');
+  const liveTotal = document.getElementById('live-total');
+  const backendTotal = document.getElementById('backend-total');
+  let totalCost;
+  if (shipping) {
+    shipping.addEventListener('change', function (event) {
+      totalCost = Math.floor(+backendTotal.value * 100) + (+event.target.value);
+      const convertToDollars = totalCost / 100;
+      liveTotal.innerText = '$ ' + convertToDollars.toFixed(2);
+    })
+  }
+
+  const payNowForm = document.getElementById('pay-now-form');
+  const total = document.getElementById('total');
+  if (payNowForm) {
+    payNowForm.addEventListener('submit', function (event) {
+      if (!shipping.value) {
+        event.preventDefault();
+        alert('You must first choose a shipping method!');
+      }
+      total.value = totalCost;
+    });
+  }
 }

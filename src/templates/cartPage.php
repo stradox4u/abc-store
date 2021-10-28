@@ -3,6 +3,7 @@
 /** @var array $user */
 /** @var int $total */
 /** @var int $balance */
+/** @var array $shipping_methods */
 ?>
 
 <div class="container">
@@ -39,7 +40,7 @@
                   <span class="input-group-text">Quantity:</span>
                   <input type="number" name="quantity" id="<?= $cartItem['id'] ?>_qty" 
                     value="<?= $cartItem['quantity'] ?>"
-                  class="form-control form-control-sm">
+                  class="form-control form-control-sm" min="0">
                 </div>
                 <input type="hidden" name="prodId" value="<?= $cartItem['id'] ?>">
                 <input type="hidden" name="userId" value="<?= $_SESSION['userdata']['id'] ?>">
@@ -53,11 +54,25 @@
       </li>
     <?php } ?>
   </ul>
-  <div class="w-100 d-flex flex-row mt-5">
-      <h3>Total: </h3>
-      <h3 class="ms-3">&#36; <?php echo number_format($total, 2); ?></h3>
+  <div class="w-100 mt-5">
+    <h5>Shipping: </h5>
+    <select name="shipping-method" id="shipping-method" class="form-control">
+      <option value="" selected> -- Choose Shipping Method -- </option>
+      <?php foreach($shipping_methods as $method)
+      { ?>
+        <option value="<?= $method['cost']; ?>"><?php echo $method['type']; ?></option>
+      <?php } ?>
+    </select>
   </div>
-  <div class="d-grid gap-2">
-    <button class="btn btn-primary btn-lg my-3">Pay Now</button>
-  </div>
+  <form action="/purchase" method="POST" id="pay-now-form">
+    <div class="w-100 d-flex flex-row mt-5">
+        <h3>Total: </h3>
+        <input type="hidden" name="backend-total" value="<?= $total ?>" id="backend-total">
+        <h3 class="ms-3" id="live-total">&#36; <?php echo number_format($total, 2); ?></h3>
+        <input type="hidden" name="total" id="total">
+    </div>
+    <div class="d-grid gap-2">
+      <button type="submit" class="btn btn-primary btn-lg my-3">Pay Now</button>
+    </div>
+  </form>
 </div>

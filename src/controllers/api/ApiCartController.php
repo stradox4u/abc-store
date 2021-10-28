@@ -20,6 +20,8 @@ class ApiCartController extends Controller
       $userId = $params->userId;
       
       $cartArray = $this->addToCart($prodId, $prodQty, $userId);
+
+      $_SESSION['cartCount'] = count($cartArray);
       return json_encode($cartArray);
     } elseif($_SERVER['REQUEST_METHOD'] === 'PATCH')
     {

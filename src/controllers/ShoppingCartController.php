@@ -17,16 +17,33 @@ class ShoppingCartController extends Controller
 
     if($_SERVER['REQUEST_METHOD'] === 'GET')
     {
+      $emInstance = GetEntityManager::getInstance();
+      $em = $emInstance->useEntityManager();
+      $shipping = $em->getRepository('App\Models\Shipping')->findAll();
+      $em->flush();
+
+      $shippingMethods = [];
+      foreach ($shipping as $method) {
+        array_push($shippingMethods, 
+        [
+          'type' => $method->getType(),
+          'cost' => $method->getCost()
+        ]);
+      }
+
       $cartResult = $this->getUserCart($_SESSION['userdata']['id']);
       $cartArray = $cartResult['cartArray'];
       $subtotals = $cartResult['subtotals'];
       $balance = $cartResult['balance'];
+
+      $_SESSION['cartCount'] = count($cartArray);
       
       return (new Template('cartPage'))->render([
         'cart' => $cartArray,
         'user' => $_SESSION['userdata'],
         'total' => array_sum($subtotals),
-        'balance' => $balance
+        'balance' => $balance,
+        'shipping_methods' => $shippingMethods
       ]);
     } 
   }
@@ -56,6 +73,7 @@ class ShoppingCartController extends Controller
       
       array_push($subtotals, $item->getQuantity() * $item->getProduct()->getPrice());
     }
+    $em->flush();
 
     return ['cartArray' => $cartArray, 'subtotals' => $subtotals, 'balance' => $balance];
   }
