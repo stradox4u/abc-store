@@ -2,11 +2,11 @@
 
 require_once "vendor/autoload.php";
 
+use App\Singletons\GetEntityManager;
 use Dotenv\Dotenv;
-use Config\GetEntityManager;
 
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
 
-$getEm = new GetEntityManager();
-$entityManager = $getEm->getEntityManager();
+$emInstance = GetEntityManager::getInstance();
+$entityManager = $emInstance->useEntityManager();

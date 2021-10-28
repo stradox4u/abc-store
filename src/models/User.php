@@ -67,6 +67,11 @@ class User
     return $this->balance;
   }
 
+  public function setBalance(int $bal)
+  {
+    $this->balance = $bal;
+  }
+
   public function getId()
   {
     return $this->id;

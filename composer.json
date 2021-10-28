@@ -10,7 +10,7 @@
     "classmap": [
       "config",
       "src/models",
-      "src/traits",
+      "src/singleton",
       "src/database",
       "src/routing",
       "src/templates",

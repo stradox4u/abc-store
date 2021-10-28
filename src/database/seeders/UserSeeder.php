@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
     public function storeUser()
     {
       $user = new User($this->name, $this->balance);
-      $em = $this->getEntityManager();
+      $em = $this->getEmInstance();
       $em->persist($user);
       $em->flush();
     }

@@ -2,70 +2,79 @@
 
 namespace App\Controllers;
 
-use App\Models\Cart;
-use App\Models\CartItem;
 use App\Routing\Template;
-use App\Traits\UseEntityManager;
+use App\Singletons\GetEntityManager;
 
 class ShoppingCartController extends Controller
 {
-  use UseEntityManager;
-
   public function handle(): string
   {
-    $em = $this->getEntityManager();
-    if($_SERVER['REQUEST_METHOD'] === 'POST')
+    if(!isset($_SESSION['username']))
     {
-      $params = json_decode(file_get_contents('php://input'));
+      $this->requestRedirect('/login');
+      return '';
+    }
 
-      $prodId = $params->prodId;
-      $prodQty = $params->prodQty;
-      $userId = $params->userId;
+    if($_SERVER['REQUEST_METHOD'] === 'GET')
+    {
+      $emInstance = GetEntityManager::getInstance();
+      $em = $emInstance->useEntityManager();
+      $shipping = $em->getRepository('App\Models\Shipping')->findAll();
+      $em->flush();
 
-      $user = $em->getRepository('App\Models\User')->find($userId);
-      $userCart = $user->getCart();
-      if(!$userCart)
-      {
-        $cart = new Cart();
-        $user->setCart($cart);
-        $em->persist($cart);
-        $userCart = $user->getCart();
-      }
-      
-      $product = $em->getRepository('App\Models\Product')->find($prodId);
-      $oldCartItems = $userCart->getCartItems();
-      $cartItem = new CartItem();
-      $filtered = $oldCartItems->filter(function($element) use($product)
-      {
-        return $element->getProduct()->getName() == $product->getName();
-      });
-      if(!$filtered->isEmpty())
-      {
-        $oldQty = $filtered->first()->getQuantity();
-        $filtered->first()->setQuantity($oldQty + $prodQty);
-        $em->persist($userCart);
-        $em->flush();
-      } else 
-      {
-        $userCart->getCartItems()->add($cartItem);
-        $cartItem->setQuantity($prodQty);
-        $cartItem->setProduct($product);
-        $cartItem->setCart($userCart);
-        $em->persist($cartItem);
-        $em->persist($userCart);
-        $em->flush();
-      }
-
-      
-      $cartItems = $userCart->getCartItems();
-      $cartArray = [];
-      foreach ($cartItems as $item) {
-        array_push($cartArray, [
-          'name' => $item->getProduct()->getName(),
-          'quantity' => $item->getQuantity()
+      $shippingMethods = [];
+      foreach ($shipping as $method) {
+        array_push($shippingMethods, 
+        [
+          'type' => $method->getType(),
+          'cost' => $method->getCost()
         ]);
       }
-      return json_encode($cartArray);
+
+      $cartResult = $this->getUserCart($_SESSION['userdata']['id']);
+      $cartArray = $cartResult['cartArray'];
+      $subtotals = $cartResult['subtotals'];
+      $balance = $cartResult['balance'];
+
+      $_SESSION['cartCount'] = count($cartArray);
+      
+      return (new Template('cartPage'))->render([
+        'cart' => $cartArray,
+        'user' => $_SESSION['userdata'],
+        'total' => array_sum($subtotals),
+        'balance' => $balance,
+        'shipping_methods' => $shippingMethods
+      ]);
+    } 
+  }
+  
+  private function getUserCart($id)
+  {
+    $emInstance = GetEntityManager::getInstance();
+    $em = $emInstance->useEntityManager();
+    
+    $user = $em->getRepository('App\Models\User')->find($id);
+    $userCartItems = $user->getCart()->getCartItems();
+    $balance = $user->getBalance();
+    
+    // A Doctrine collection is returned rather than an array, so to filter it:
+    $cartArray = [];
+    $subtotals = [];
+    foreach ($userCartItems as $item) 
+    {
+      array_push($cartArray, [
+        'name' => $item->getProduct()->getName(),
+        'price' => $item->getProduct()->getPrice(),
+        'unit' => $item->getProduct()->getUnit(),
+        'image' => $item->getProduct()->getImage(),
+        'id' => $item->getProduct()->getId(),
+        'quantity' => $item->getQuantity()
+      ]);
+      
+      array_push($subtotals, $item->getQuantity() * $item->getProduct()->getPrice());
     }
+    $em->flush();
+
+    return ['cartArray' => $cartArray, 'subtotals' => $subtotals, 'balance' => $balance];
   }
 }

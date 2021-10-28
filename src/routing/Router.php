@@ -3,9 +3,10 @@
 namespace App\Routing;
 
 use App\Controllers\Controller;
-use App\Controllers\LandingPageController;
 use App\Controllers\LoginController;
 use App\Controllers\LogoutController;
+use App\Controllers\LandingPageController;
+use App\Controllers\PurchaseController;
 use App\Controllers\ShoppingCartController;
 
 class Router
@@ -26,8 +27,8 @@ class Router
       case '/cart':
         return new ShoppingCartController();
         break;
-      case '/success':
-        return new Success();
+      case '/purchase':
+        return new PurchaseController();
         break;
       default:
         return new class extends Controller

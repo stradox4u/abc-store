@@ -33,7 +33,7 @@ class CartItem
   */
   private $cart;
 
-  public function setCart(Cart $cart)
+  public function setCart(?Cart $cart)
   {
     $this->cart = $cart;
   }

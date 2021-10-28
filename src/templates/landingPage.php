@@ -1,6 +1,6 @@
 <?php
 /** @var array $products  */
-/** @var string $user  */
+/** @var array $user  */
 ?>
 
 <div class="container">

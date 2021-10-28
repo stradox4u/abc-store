@@ -3,12 +3,10 @@
 namespace App\Controllers;
 
 use App\Routing\Template;
-use App\Traits\UseEntityManager;
+use App\Singletons\GetEntityManager;
 
 class LoginController extends Controller
 {
-  use UseEntityManager;
-
   public function handle(): string
   {
     if(isset($_SESSION['username']))
@@ -41,7 +39,8 @@ class LoginController extends Controller
 
   private function loginUser(string $username): ?array
   {
-    $em = $this->getEntityManager();
+    $emInstance = GetEntityManager::getInstance();
+    $em = $emInstance->useEntityManager();
     $user = $em->getRepository('App\Models\User')
       ->findOneBy(array('name' => $username));
     if($user)

@@ -3,7 +3,7 @@
 namespace App\Routing\Api;
 
 use App\Controllers\Controller;
-use App\Controllers\ShoppingCartController;
+use App\Controllers\Api\ApiCartController;
 
 class Router
 {
@@ -12,7 +12,7 @@ class Router
     switch($_SERVER['PATH_INFO'] ?? '/')
     {
       case '/cart':
-        return new ShoppingCartController();
+        return new ApiCartController();
         break;
       default:
         return new class extends Controller
