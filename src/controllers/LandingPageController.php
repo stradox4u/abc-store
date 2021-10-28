@@ -3,12 +3,10 @@
 namespace App\Controllers;
 
 use App\Routing\Template;
-use App\Traits\UseEntityManager;
+use App\Singletons\GetEntityManager;
 
 class LandingPageController extends Controller
 {
-  use UseEntityManager;
-
   public function handle(): string
   {
     if(!isset($_SESSION['username']))
@@ -28,7 +26,8 @@ class LandingPageController extends Controller
 
   private function getProducts(): array
   {
-    $em = $this->getEntityManager();
+    $emInstance = GetEntityManager::getInstance();
+    $em = $emInstance->useEntityManager();
     $products = $em->getRepository('App\Models\Product')->findAll();
     $allProducts = array_map(function ($product) 
     {
@@ -45,7 +44,8 @@ class LandingPageController extends Controller
 
   private function getUserCart(): int
   {
-    $em = $this->getEntityManager();
+    $emInstance = GetEntityManager::getInstance();
+    $em = $emInstance->useEntityManager();
     $user = $em->getRepository('App\Models\User')->find($_SESSION['userdata']['id']);
     if($user->getCart())
     {

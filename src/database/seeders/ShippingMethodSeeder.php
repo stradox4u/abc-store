@@ -18,7 +18,7 @@ class ShippingMethodSeeder extends Seeder
   public function storeShippingMethod()
   {
     $shippingMethod = new Shipping($this->type, $this->cost);
-    $em = $this->getEntityManager();
+    $em = $this->getEmInstance();
     $em->persist($shippingMethod);
     $em->flush();
   }

@@ -5,15 +5,14 @@ namespace App\Controllers;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Routing\Template;
-use App\Traits\UseEntityManager;
+use App\Singletons\GetEntityManager;
 
 class ShoppingCartController extends Controller
 {
-  use UseEntityManager;
-
   public function handle(): string
   {
-    $em = $this->getEntityManager();
+    $emInstance = GetEntityManager::getInstance();
+    $em = $emInstance->useEntityManager();
     if($_SERVER['REQUEST_METHOD'] === 'POST')
     {
       $params = json_decode(file_get_contents('php://input'));

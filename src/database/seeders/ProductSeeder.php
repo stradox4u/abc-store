@@ -22,7 +22,7 @@ namespace App\Database\Seeders;
     public function storeProduct()
     {
       $product = new Product($this->name, $this->price, $this->unit, $this->image);
-      $em = $this->getEntityManager();
+      $em = $this->getEmInstance();
       $em->persist($product);
       $em->flush();
     }
