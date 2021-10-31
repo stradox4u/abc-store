@@ -31,7 +31,8 @@
     "database:refresh": [
       "vendor/bin/doctrine orm:schema-tool:drop --force",
       "vendor/bin/doctrine orm:schema-tool:create",
-      "@php seedDatabase.php"
+      "@php seedDatabase.php",
+      "vendor/bin/doctrine orm:generate-proxies"
     ]
   },
   "require": {
