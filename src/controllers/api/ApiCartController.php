@@ -41,7 +41,15 @@ class ApiCartController extends Controller
         return $item->getProduct()->getId() == $prodId;
       });
       $relevantItem = $relevantItemArray->first();
-      $relevantItem->setQuantity($prodQty);
+      if ($prodQty <= 0)
+      {
+        $user->getCart()->getCartItems()->removeElement($relevantItem);
+        $relevantItem->setCart(null);
+      }
+      else
+      {
+        $relevantItem->setQuantity($prodQty);
+      }
       $em->persist($relevantItem);
       $em->flush();
 

@@ -19,6 +19,16 @@ class PurchaseController extends Controller
       $user = $em->getRepository('App\Models\User')->find($_SESSION['userdata']['id']);
       $oldBalance = $user->getBalance();
 
+      if($purchaseTotal > $oldBalance)
+      {
+        return (new Template('successPage'))->render([
+          'purchaseCost' => $purchaseTotal,
+          'oldBalance' => $oldBalance,
+          'newBalance' => 0,
+          'balanceWarning' => 'Your purchase exceeds your available balance!'
+        ]);
+      }
+
       $user->setBalance($oldBalance - $purchaseTotal);
       $cartItems = $user->getCart()->getCartItems();
 
@@ -37,7 +47,8 @@ class PurchaseController extends Controller
       return (new Template('successPage'))->render([
         'purchaseCost' => $purchaseTotal,
         'oldBalance' => $oldBalance,
-        'newBalance' => $newBalance
+        'newBalance' => $newBalance,
+        'balanceWarning' => ''
       ]);
     };
   }
