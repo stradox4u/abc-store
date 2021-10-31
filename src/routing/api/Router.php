@@ -4,6 +4,7 @@ namespace App\Routing\Api;
 
 use App\Controllers\Controller;
 use App\Controllers\Api\ApiCartController;
+use App\Controllers\Api\RatingController;
 
 class Router
 {
@@ -13,6 +14,9 @@ class Router
     {
       case '/cart':
         return new ApiCartController();
+        break;
+      case '/rating':
+        return new RatingController();
         break;
       default:
         return new class extends Controller

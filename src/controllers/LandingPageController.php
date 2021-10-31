@@ -31,12 +31,30 @@ class LandingPageController extends Controller
     $products = $em->getRepository('App\Models\Product')->findAll();
     $allProducts = array_map(function ($product)
     {
+      $ratings = $product->getProductRatings();
+      $ratingsArray = [];
+      foreach($ratings as $rating)
+      {
+        array_push($ratingsArray, $rating->getRating());
+      }
+
+      $avg_rating = 0;
+      if(count($ratingsArray) > 0)
+      {
+        $avg_rating = array_sum($ratingsArray) / count($ratingsArray);
+      }
+      else 
+      {
+        $avg_rating = 5;
+      }
       return array(
         'id' => $product->getId(),
         'name' => $product->getName(),
         'price' => $product->getPrice(),
         'unit' => $product->getUnit(),
-        'image' => $product->getImage()
+        'image' => $product->getImage(),
+        'avg_rating' => $avg_rating,
+        'rating_count' => count($ratingsArray)
       );
     }, $products);
     return $allProducts;

@@ -2,6 +2,7 @@ window.onload = function () {
   addToCartFormListener();
   updateCartQuantityListener();
   shippingMethodListener();
+  ratingsListener();
 }
 
 const cartBadge = document.getElementById('cart_badge');
@@ -64,11 +65,9 @@ function updateCartQuantityListener() {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
           },
-          redirect: 'manual',
           body: JSON.stringify(data)
         });
       const returned = await response.json();
-      console.log(returned.message);
       if (returned.message === 'Success') {
         window.location.reload();
       }
@@ -100,4 +99,33 @@ function shippingMethodListener() {
       total.value = totalCost;
     });
   }
+}
+
+function ratingsListener() {
+  const ratingStars = document.getElementsByClassName('rating-star');
+  const starsArray = Array.from(ratingStars);
+
+  starsArray.forEach(function (star) {
+    star.addEventListener('click', async function (event) {
+      const id_rating_user = event.target.value.split('-');
+      const [id, rating, userId] = id_rating_user;
+
+      const response = await fetch('http://localhost:8000/api/rating', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({ prodId: id, rating: rating, userId: userId })
+      });
+      const returned = await response.json();
+      if (returned.message === 'Success') {
+        window.location.reload();
+      } else if (returned.message === 'Already rated') {
+        const container = document.getElementById(`${id}-stars`);
+        container.insertAdjacentHTML('afterend', `<p class="text-center text-danger">
+          You've already rated this</p>`);
+      }
+    });
+  })
 }

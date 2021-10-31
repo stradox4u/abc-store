@@ -30,4 +30,34 @@ class Rating
    * @JoinColumn(name="product_id", referencedColumnName="id")
    */
   private $product;
+
+  public function __construct(int $rating)
+  {
+    $this->rating = $rating;
+  }
+
+  public function getRating()
+  {
+    return $this->rating;
+  }
+
+  public function getProduct()
+  {
+    return $this->product;
+  }
+
+  public function getUser()
+  {
+    return $this->user;
+  }
+
+  public function setUser(User $user)
+  {
+    $this->user = $user;
+  }
+
+  public function setProduct(Product $product)
+  {
+    $this->product = $product;
+  }
 }
