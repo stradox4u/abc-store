@@ -1,4 +1,5 @@
 <?php
+
 /** @var array $cart */
 /** @var array $user */
 /** @var int $total */
@@ -9,25 +10,25 @@
 <div class="container">
   <div class="d-flex flex-row my-3">
     <h5>User Balance:</h5>
-    <h5 class="text-secondary ms-3">&#36; <?php 
-      echo number_format(($balance / 100), 2) ?></h5>
+    <h5 class="text-secondary ms-3">&#36; <?php
+                                          echo number_format(($balance / 100), 2) ?></h5>
   </div>
   <ul class="list-group list-group-flush">
-    <?php foreach($cart as $cartItem)
+    <?php foreach ($cart as $cartItem)
     { ?>
       <li class="list-group-item">
         <div class="mb-3 p-3">
           <div class="d-flex flex-row justify-content-between">
             <img src="<?= $cartItem['image'] ?>" alt="<?= $cartItem['name'] ?> -image"
               class="img-fluid col" style="object-fit: cover; max-width: 180px;">
-            
+
             <div class="col d-flex flex-column ms-5">
               <div class="d-flex flex-row justify-content-between">
                 <h4 class="text-capitalize text-start"><?php echo $cartItem['name'] ?></h4>
                 <div class="d-flex flex-row align-items-baseline">
                   <h6 class="text-secondary">subtotal: </h6>
-                  <h5 class="text-dark ms-2">&#36; <?php echo number_format(($cartItem['price'] 
-                    * $cartItem['quantity']), 2); ?></h3>
+                  <h5 class="text-dark ms-2">&#36; <?php echo number_format(($cartItem['price']
+                                                      * $cartItem['quantity']), 2); ?></h3>
                 </div>
               </div>
               <div class="w-100 border-bottom border-secondary"></div>
@@ -38,9 +39,8 @@
               <form action="/cart" method="PATCH" class="cart-product-form">
                 <div class="input-group my-3">
                   <span class="input-group-text">Quantity:</span>
-                  <input type="number" name="quantity" id="<?= $cartItem['id'] ?>_qty" 
-                    value="<?= $cartItem['quantity'] ?>"
-                  class="form-control form-control-sm" min="0">
+                  <input type="number" name="quantity" id="<?= $cartItem['id'] ?>_qty"
+                    value="<?= $cartItem['quantity'] ?>" class="form-control form-control-sm" min="0">
                 </div>
                 <input type="hidden" name="prodId" value="<?= $cartItem['id'] ?>">
                 <input type="hidden" name="userId" value="<?= $_SESSION['userdata']['id'] ?>">
@@ -58,7 +58,7 @@
     <h5>Shipping: </h5>
     <select name="shipping-method" id="shipping-method" class="form-control">
       <option value="" selected> -- Choose Shipping Method -- </option>
-      <?php foreach($shipping_methods as $method)
+      <?php foreach ($shipping_methods as $method)
       { ?>
         <option value="<?= $method['cost']; ?>"><?php echo $method['type']; ?></option>
       <?php } ?>
@@ -66,10 +66,10 @@
   </div>
   <form action="/purchase" method="POST" id="pay-now-form">
     <div class="w-100 d-flex flex-row mt-5">
-        <h3>Total: </h3>
-        <input type="hidden" name="backend-total" value="<?= $total ?>" id="backend-total">
-        <h3 class="ms-3" id="live-total">&#36; <?php echo number_format($total, 2); ?></h3>
-        <input type="hidden" name="total" id="total">
+      <h3>Total: </h3>
+      <input type="hidden" name="backend-total" value="<?= $total ?>" id="backend-total">
+      <h3 class="ms-3" id="live-total">&#36; <?php echo number_format($total, 2); ?></h3>
+      <input type="hidden" name="total" id="total">
     </div>
     <div class="d-grid gap-2">
       <button type="submit" class="btn btn-primary btn-lg my-3">Pay Now</button>

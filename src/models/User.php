@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @Entity
  * @Table(name="users")
-*/
+ */
 
 class User
 {
@@ -15,7 +15,7 @@ class User
    * @Id
    * @Column(type="integer")
    * @GeneratedValue
-  */
+   */
   private $id;
 
   /** @Column(type="string") */
@@ -26,12 +26,12 @@ class User
 
   /**
    * @OneToOne(targetEntity="Cart", mappedBy="user")
-  */
+   */
   private $cart;
 
   /**
    * @OneToMany(targetEntity="Rating", mappedBy="user")
-  */
+   */
   private $ratings;
 
   public function __construct(string $name, int $balance)
@@ -41,7 +41,7 @@ class User
     $this->ratings = new ArrayCollection();
   }
 
-  public function getCart() 
+  public function getCart()
   {
     return $this->cart;
   }
@@ -77,4 +77,3 @@ class User
     return $this->id;
   }
 }
-

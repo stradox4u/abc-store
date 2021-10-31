@@ -9,13 +9,13 @@ class ShoppingCartController extends Controller
 {
   public function handle(): string
   {
-    if(!isset($_SESSION['username']))
+    if (!isset($_SESSION['username']))
     {
       $this->requestRedirect('/login');
       return '';
     }
 
-    if($_SERVER['REQUEST_METHOD'] === 'GET')
+    if ($_SERVER['REQUEST_METHOD'] === 'GET')
     {
       $emInstance = GetEntityManager::getInstance();
       $em = $emInstance->useEntityManager();
@@ -23,12 +23,15 @@ class ShoppingCartController extends Controller
       $em->flush();
 
       $shippingMethods = [];
-      foreach ($shipping as $method) {
-        array_push($shippingMethods, 
-        [
-          'type' => $method->getType(),
-          'cost' => $method->getCost()
-        ]);
+      foreach ($shipping as $method)
+      {
+        array_push(
+          $shippingMethods,
+          [
+            'type' => $method->getType(),
+            'cost' => $method->getCost()
+          ]
+        );
       }
 
       $cartResult = $this->getUserCart($_SESSION['userdata']['id']);
@@ -37,7 +40,7 @@ class ShoppingCartController extends Controller
       $balance = $cartResult['balance'];
 
       $_SESSION['cartCount'] = count($cartArray);
-      
+
       return (new Template('cartPage'))->render([
         'cart' => $cartArray,
         'user' => $_SESSION['userdata'],
@@ -45,22 +48,22 @@ class ShoppingCartController extends Controller
         'balance' => $balance,
         'shipping_methods' => $shippingMethods
       ]);
-    } 
+    }
   }
-  
+
   private function getUserCart($id)
   {
     $emInstance = GetEntityManager::getInstance();
     $em = $emInstance->useEntityManager();
-    
+
     $user = $em->getRepository('App\Models\User')->find($id);
     $userCartItems = $user->getCart()->getCartItems();
     $balance = $user->getBalance();
-    
+
     // A Doctrine collection is returned rather than an array, so to filter it:
     $cartArray = [];
     $subtotals = [];
-    foreach ($userCartItems as $item) 
+    foreach ($userCartItems as $item)
     {
       array_push($cartArray, [
         'name' => $item->getProduct()->getName(),
@@ -70,7 +73,7 @@ class ShoppingCartController extends Controller
         'id' => $item->getProduct()->getId(),
         'quantity' => $item->getQuantity()
       ]);
-      
+
       array_push($subtotals, $item->getQuantity() * $item->getProduct()->getPrice());
     }
     $em->flush();

@@ -13,10 +13,10 @@ $templateData = [
 ];
 
 $router = new Router();
-if($controller = $router->getController())
+if ($controller = $router->getController())
 {
   $content = $controller->handle();
-  if($controller->willRedirect())
+  if ($controller->willRedirect())
   {
     return;
   }

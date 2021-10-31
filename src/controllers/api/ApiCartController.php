@@ -11,19 +11,20 @@ class ApiCartController extends Controller
 {
   public function handle(): string
   {
-    if($_SERVER['REQUEST_METHOD'] === 'POST')
+    if ($_SERVER['REQUEST_METHOD'] === 'POST')
     {
       $params = json_decode(file_get_contents('php://input'));
-      
+
       $prodId = $params->prodId;
       $prodQty = $params->prodQty;
       $userId = $params->userId;
-      
+
       $cartArray = $this->addToCart($prodId, $prodQty, $userId);
 
       $_SESSION['cartCount'] = count($cartArray);
       return json_encode($cartArray);
-    } elseif($_SERVER['REQUEST_METHOD'] === 'PATCH')
+    }
+    elseif ($_SERVER['REQUEST_METHOD'] === 'PATCH')
     {
       $params = json_decode(file_get_contents('php://input'));
       $prodId = $params->prodId;
@@ -35,7 +36,7 @@ class ApiCartController extends Controller
 
       $user = $em->getRepository('App\Models\User')->find($userId);
       $userCartItems = $user->getCart()->getCartItems();
-      $relevantItemArray = $userCartItems->filter(function($item) use($prodId)
+      $relevantItemArray = $userCartItems->filter(function ($item) use ($prodId)
       {
         return $item->getProduct()->getId() == $prodId;
       });
@@ -56,29 +57,30 @@ class ApiCartController extends Controller
     // Find Logged in User and their cart (Create a cart if the user doesn't have one)
     $user = $em->getRepository('App\Models\User')->find($userId);
     $userCart = $user->getCart();
-    if(!$userCart)
+    if (!$userCart)
     {
       $cart = new Cart();
       $user->setCart($cart);
       $em->persist($cart);
       $userCart = $user->getCart();
     }
-    
+
     // Find the product and attach it to the user's cart
     $product = $em->getRepository('App\Models\Product')->find($prodId);
     $oldCartItems = $userCart->getCartItems();
     $cartItem = new CartItem();
-    $filtered = $oldCartItems->filter(function($element) use($product)
+    $filtered = $oldCartItems->filter(function ($element) use ($product)
     {
       return $element->getProduct()->getName() == $product->getName();
     });
-    if(!$filtered->isEmpty())
+    if (!$filtered->isEmpty())
     {
       $oldQty = $filtered->first()->getQuantity();
       $filtered->first()->setQuantity($oldQty + $prodQty);
       $em->persist($userCart);
       $em->flush();
-    } else 
+    }
+    else
     {
       $userCart->getCartItems()->add($cartItem);
       $cartItem->setQuantity($prodQty);
@@ -94,7 +96,7 @@ class ApiCartController extends Controller
 
     // A Doctrine collection is returned rather than an array, so to filter it:
     $cartArray = [];
-    foreach ($cartItems as $item) 
+    foreach ($cartItems as $item)
     {
       array_push($cartArray, [
         'name' => $item->getProduct()->getName(),
@@ -104,5 +106,4 @@ class ApiCartController extends Controller
 
     return $cartArray;
   }
-
 }

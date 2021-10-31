@@ -7,10 +7,10 @@ use App\Singletons\GetEntityManager;
 
 class PurchaseController extends Controller
 {
-  
-  public function handle():string
+
+  public function handle(): string
   {
-    if($_SERVER['REQUEST_METHOD'] === 'POST')
+    if ($_SERVER['REQUEST_METHOD'] === 'POST')
     {
       $purchaseTotal = (int) $_POST['total'];
       $emInstance = GetEntityManager::getInstance();
@@ -22,7 +22,8 @@ class PurchaseController extends Controller
       $user->setBalance($oldBalance - $purchaseTotal);
       $cartItems = $user->getCart()->getCartItems();
 
-      foreach ($cartItems as $item) {
+      foreach ($cartItems as $item)
+      {
         $user->getCart()->getCartItems()->removeElement($item);
         $item->setCart(null);
       }

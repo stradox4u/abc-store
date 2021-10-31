@@ -9,7 +9,7 @@ class Router
 {
   public function getController(): ?Controller
   {
-    switch($_SERVER['PATH_INFO'] ?? '/')
+    switch ($_SERVER['PATH_INFO'] ?? '/')
     {
       case '/cart':
         return new ApiCartController();
