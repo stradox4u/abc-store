@@ -9,7 +9,7 @@ class LandingPageController extends Controller
 {
   public function handle(): string
   {
-    if(!isset($_SESSION['username']))
+    if (!isset($_SESSION['username']))
     {
       $this->requestRedirect('/login');
       return '';
@@ -29,14 +29,32 @@ class LandingPageController extends Controller
     $emInstance = GetEntityManager::getInstance();
     $em = $emInstance->useEntityManager();
     $products = $em->getRepository('App\Models\Product')->findAll();
-    $allProducts = array_map(function ($product) 
+    $allProducts = array_map(function ($product)
     {
+      $ratings = $product->getProductRatings();
+      $ratingsArray = [];
+      foreach($ratings as $rating)
+      {
+        array_push($ratingsArray, $rating->getRating());
+      }
+
+      $avg_rating = 0;
+      if(count($ratingsArray) > 0)
+      {
+        $avg_rating = array_sum($ratingsArray) / count($ratingsArray);
+      }
+      else 
+      {
+        $avg_rating = 5;
+      }
       return array(
         'id' => $product->getId(),
         'name' => $product->getName(),
         'price' => $product->getPrice(),
         'unit' => $product->getUnit(),
-        'image' => $product->getImage()
+        'image' => $product->getImage(),
+        'avg_rating' => $avg_rating,
+        'rating_count' => count($ratingsArray)
       );
     }, $products);
     return $allProducts;
@@ -47,11 +65,12 @@ class LandingPageController extends Controller
     $emInstance = GetEntityManager::getInstance();
     $em = $emInstance->useEntityManager();
     $user = $em->getRepository('App\Models\User')->find($_SESSION['userdata']['id']);
-    if($user->getCart())
+    if ($user->getCart())
     {
       $cartItems = $user->getCart()->getCartItems()->toArray();
       return count($cartItems);
-    } else
+    }
+    else
     {
       return 0;
     }

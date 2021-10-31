@@ -8,7 +8,7 @@ use NumberFormatter;
 /**
  * @Entity
  * @Table(name="products")
-*/
+ */
 
 class Product
 {
@@ -16,7 +16,7 @@ class Product
    * @Id
    * @Column(type="integer")
    * @GeneratedValue
-  */
+   */
   private $id;
 
   /** @Column(type="string") */
@@ -33,12 +33,12 @@ class Product
 
   /**
    * @OneToMany(targetEntity="Rating", mappedBy="product")
-  */
+   */
   private $ratings;
 
   /**
    * @OneToMany(targetEntity="CartItem", mappedBy="product")
-  */
+   */
   private $cartItems;
 
   public function __construct(string $name, int $price, string $unit, string $image)

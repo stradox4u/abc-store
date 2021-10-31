@@ -5,7 +5,7 @@ require_once "../bootstrap.php";
 use App\Routing\Api\Router;
 
 $router = new Router();
-if($controller = $router->getController())
+if ($controller = $router->getController())
 {
   $response = $controller->handle();
   echo $response;

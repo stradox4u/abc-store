@@ -17,7 +17,7 @@ class DatabaseSeeder
 
   private function seedProducts()
   {
-    foreach($this->products as $product)
+    foreach ($this->products as $product)
     {
       $prodModel = new ProductSeeder($product['name'], $product['price'], $product['unit'], $product['image']);
       $prodModel->storeProduct();
@@ -26,7 +26,7 @@ class DatabaseSeeder
 
   private function seedUsers()
   {
-    foreach($this->users as $user)
+    foreach ($this->users as $user)
     {
       $userModel = new UserSeeder($user['name'], $user['balance']);
       $userModel->storeUser();
@@ -35,7 +35,7 @@ class DatabaseSeeder
 
   private function seedShippingMethods()
   {
-    foreach($this->shippingMethods as $shippingMethod)
+    foreach ($this->shippingMethods as $shippingMethod)
     {
       $shippingMethodModel = new ShippingMethodSeeder($shippingMethod['type'], $shippingMethod['cost']);
       $shippingMethodModel->storeShippingMethod();

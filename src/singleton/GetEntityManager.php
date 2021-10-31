@@ -22,15 +22,15 @@ class GetEntityManager
       'password' => $_ENV['DB_PASSWORD'],
       'dbname' => $_ENV['DB_NAME']
     );
-    
+
     $config = Setup::createAnnotationMetadataConfiguration($this->paths, $this->isDevMode);
-  
+
     $this->entityManager = EntityManager::create($this->dbParams, $config);
   }
 
   public static function getInstance()
   {
-    if(!self::$instance)
+    if (!self::$instance)
     {
       self::$instance = new GetEntityManager;
     }

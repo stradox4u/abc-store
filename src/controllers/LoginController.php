@@ -9,21 +9,22 @@ class LoginController extends Controller
 {
   public function handle(): string
   {
-    if(isset($_SESSION['username']))
+    if (isset($_SESSION['username']))
     {
       $this->requestRedirect('/');
       return '';
     }
 
     $formError = [];
-    if($_SERVER['REQUEST_METHOD'] === 'POST')
+    if ($_SERVER['REQUEST_METHOD'] === 'POST')
     {
       $formUsername = $_POST['username'] ?? '';
       $userData = $this->loginUser($formUsername);
-      if(!$userData)
+      if (!$userData)
       {
         $formError = ['username' => sprintf('The username [%s] was not found.', $formUsername)];
-      } else 
+      }
+      else
       {
         $_SESSION['username'] = $formUsername;
         $_SESSION['userdata'] = $userData;
@@ -43,10 +44,11 @@ class LoginController extends Controller
     $em = $emInstance->useEntityManager();
     $user = $em->getRepository('App\Models\User')
       ->findOneBy(array('name' => $username));
-    if($user)
+    if ($user)
     {
       return ['id' => $user->getId(), 'name' => $user->getName(), 'balance' => $user->getBalance()];
-    } else 
+    }
+    else
     {
       return null;
     }

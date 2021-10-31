@@ -2,6 +2,7 @@
 /** @var int $oldBalance */
 /** @var int $newBalance */
 /** @var int $purchaseCost */
+/** @var string $balanceWarning */
 ?>
 
 <div class="container">
@@ -25,6 +26,11 @@
       </div>
     </div>
   </div>
+  <?php if ($balanceWarning) { ?>
+    <div class="w-100 text-center mt-3">
+      <p class="text-danger"><?php echo $balanceWarning ?></p>
+    </div>
+  <?php } ?>
   <div class="w-100 text-center mt-3">
     <a href="/">Go Home</a>
   </div>

@@ -13,6 +13,19 @@
             origin="anonymous" class="img-fluid w-100" style="object-fit: cover;">
           <div class="card-body">
             <h5 class="card-title text-capitalize"><?php echo $product['name'] ?><h5>
+            <div class="w-100 mt-2" id="<?= $product['id'] ?>-stars">
+              <?php for($i = 0; $i < 5; $i++)
+              { ?>
+                <input type="image" src="/src/assets/rating-star.svg" alt="star-image"
+                  style="height: 24px; width: 24px;" class="me-2 rating-star" data-bs-toggle="tooltip"
+                  data-bs-placement="top" title="<?= $i + 1 ?> Stars" 
+                  value="<?= $product['id'] ?>-<?= $i + 1 ?>-<?=$_SESSION['userdata']['id']?>"></input>
+              <?php } ?>
+            </div>
+            <div class="w-100 d-flex flex-row align-items-baseline mt-3">
+              <h6 class="text-secondary">Avg. Rating: </h6>
+              <p class="ms-2"><?php echo $product['avg_rating'] ?> | <?php echo $product['rating_count'] ?> ratings</p>
+            </div>
           </div>
           <div class="card-text p-3">
             <h6 class="text-secondary">Price: &#36; <?php echo ($product['price']) ?></h6>

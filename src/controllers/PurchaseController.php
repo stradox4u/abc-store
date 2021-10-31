@@ -7,10 +7,10 @@ use App\Singletons\GetEntityManager;
 
 class PurchaseController extends Controller
 {
-  
-  public function handle():string
+
+  public function handle(): string
   {
-    if($_SERVER['REQUEST_METHOD'] === 'POST')
+    if ($_SERVER['REQUEST_METHOD'] === 'POST')
     {
       $purchaseTotal = (int) $_POST['total'];
       $emInstance = GetEntityManager::getInstance();
@@ -19,10 +19,21 @@ class PurchaseController extends Controller
       $user = $em->getRepository('App\Models\User')->find($_SESSION['userdata']['id']);
       $oldBalance = $user->getBalance();
 
+      if($purchaseTotal > $oldBalance)
+      {
+        return (new Template('successPage'))->render([
+          'purchaseCost' => $purchaseTotal,
+          'oldBalance' => $oldBalance,
+          'newBalance' => 0,
+          'balanceWarning' => 'Your purchase exceeds your available balance!'
+        ]);
+      }
+
       $user->setBalance($oldBalance - $purchaseTotal);
       $cartItems = $user->getCart()->getCartItems();
 
-      foreach ($cartItems as $item) {
+      foreach ($cartItems as $item)
+      {
         $user->getCart()->getCartItems()->removeElement($item);
         $item->setCart(null);
       }
@@ -36,7 +47,8 @@ class PurchaseController extends Controller
       return (new Template('successPage'))->render([
         'purchaseCost' => $purchaseTotal,
         'oldBalance' => $oldBalance,
-        'newBalance' => $newBalance
+        'newBalance' => $newBalance,
+        'balanceWarning' => ''
       ]);
     };
   }
