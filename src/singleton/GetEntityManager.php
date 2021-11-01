@@ -5,6 +5,9 @@ namespace App\Singletons;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 
+// require_once __DIR__ . '/../../vendor/doctrine/orm/lib/Doctrine/ORM/EntityManager.php';
+// require_once __DIR__ . '/../../vendor/doctrine/dbal/src/DriverManager.php';
+
 class GetEntityManager
 {
   private static $instance = null;
